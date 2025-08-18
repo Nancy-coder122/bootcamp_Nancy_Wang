@@ -11,3 +11,30 @@
 
 ## Project Folder Rules
 - Keep project files organized and clearly named.
+
+# Data Storage
+## Folder Structure
+
+The project uses the following data folder structure:
+
+- **data/raw/** → Contains the original, unprocessed data files saved directly after creation.
+
+- **data/processed/** → Stores the cleaned or validated data, and data saved using utility functions.
+
+## Formats Used and Why
+
+Two formats are used in this project:
+
+- **CSV (.csv)** → Simple text format that is easy to read and compatible with many tools. Used for basic data exchange and inspection.
+
+- **Parquet (.parquet)** → A binary columnar format, more efficient for large datasets in terms of storage and speed. Used when performance matters.
+
+## Reading/Writing with Environment Variables
+
+The project uses .env variables to configure data storage paths. These are loaded using dotenv, and fallback defaults are provided:
+
+RAW = pathlib.Path(os.getenv("DATA_DIR_RAW", "data/raw"))
+PROC = pathlib.Path(os.getenv("DATA_DIR_PROCESSED", "data/processed"))
+
+This allows flexibility when changing storage locations without modifying the core code.
+All data read/write operations use these variables to construct paths dynamically.
