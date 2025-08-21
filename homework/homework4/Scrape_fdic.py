@@ -45,7 +45,6 @@ try:
     df_scrape = pd.read_html(str(table))[0]
 except Exception as e:
     print("Scrape failed:", e)
-    # fallback 内联 HTML 示例（一般不会进入）
     html = """
     <table>
         <tr><th>Ticker</th><th>Price</th></tr>
@@ -57,11 +56,9 @@ except Exception as e:
     table = soup.find('table')
     df_scrape = pd.read_html(str(table))[0]
 
-# 尝试转换为数字（如果 Fund 列存在）
 if 'Fund' in df_scrape.columns:
     df_scrape['Fund'] = pd.to_numeric(df_scrape['Fund'], errors='coerce')
 
-# ✅ 校验 + 保存
 msgs2 = validate_df(df_scrape, required_cols=list(df_scrape.columns), dtypes_map={})
 print(msgs2)
 
